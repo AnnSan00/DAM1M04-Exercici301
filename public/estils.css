@@ -1,0 +1,28 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.warning {
+  background: #ffdddd;
+  padding: 10px;
+  border-left: 4px solid red;
+}
+
+.badge {
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: white;
+}
+
+.small {
+  background: green;
+}
+
+.big {
+  background: blue;
+}
+
+nav a {
+  margin-right: 10px;
+}
