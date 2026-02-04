@@ -1,51 +1,49 @@
-const express = require("express");
-const path = require("path");
-const hbs = require("hbs");
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const hbs = require('hbs');
 
 const app = express();
-const PORT = 3000;
+const port = 3000;
 
-// Paths
-const viewsPath = path.join(__dirname, "views");
-const partialsPath = path.join(__dirname, "views/partials");
-const publicPath = path.join(__dirname, "../public");
+// Static files (optional)
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Configuració HBS
-app.set("view engine", "hbs");
-app.set("views", viewsPath);
-hbs.registerPartials(partialsPath);
-
-// Helper lte (<=)
-hbs.registerHelper("lte", function (a, b) {
-  return a <= b;
+// Disable cache
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  next();
 });
 
-// Middleware per servir arxius estàtics
-app.use(express.static(publicPath));
+// Continguts estàtics (carpeta public)
+app.use(express.static('public'))
 
-// Carregar dades JSON
-const site = require("./data/site.json");
-const cities = require("./data/cities.json");
-const countries = require("./data/countries.json");
+// Handlebars
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
 
-// RUTA PRINCIPAL
-app.get("/", (req, res) => {
-  res.render("index", {
-    ...site
-  });
+// Registrar "Helpers .hbs" aquí
+hbs.registerHelper('gt', (a, b) => a > b);
+
+// Route
+app.get('/animals', (req, res) => { // A la ruta URL /animals
+
+  const file = path.join(__dirname, 'data', 'animals.json'); // Llegim el fitxer JSON
+  const json = JSON.parse(fs.readFileSync(file, 'utf8'));
+  res.render('animals', json);                              // renderitza la plantilla animals.hbs
 });
 
-// RUTA INFORME
-app.get("/informe", (req, res) => {
-  res.render("informe", {
-    title: site.title,
-    cities: cities.cities,
-    countries: countries.countries,
-    threshold: 800000
-  });
+// Start server
+const httpServer = app.listen(port, () => {
+  console.log(`http://localhost:${port}`);
+  console.log(`http://localhost:${port}/animals`);
 });
 
-// Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`Servidor en marxa a http://localhost:3000/`);
+// Graceful shutdown
+process.on('SIGINT', () => {
+  httpServer.close();
+  process.exit(0);
 });
