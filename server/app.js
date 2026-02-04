@@ -47,5 +47,5 @@ app.get("/informe", (req, res) => {
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor en marxa a http://localhost:${PORT}`);
+  console.log(`Servidor en marxa a http://localhost:3000/`);
 });
