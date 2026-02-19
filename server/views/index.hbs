@@ -1,10 +1,20 @@
-{{> header}}
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/estils.css">
+  <title>{{title}}</title>
+</head>
+<body>
+      {{> header}}
 
-<h1>{{title}}</h1>
-<h2>{{subtitle}}</h2>
+      <h1>{{title}}</h1>
+      <h2>{{subtitle}}</h2>
 
-<p>{{notice}}</p>
+      <p>{{notice}}</p>
 
-{{#if showWarning}}
-  <div class="warning">Atenció: això és un avís important!</div>
-{{/if}}
+      {{#if showWarning}}
+        <div class="warning">Atenció: això és un avís important!</div>
+      {{/if}}
+</body>
+</html>

@@ -1,33 +1,42 @@
-{{> header}}
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/estils.css">
+  <title>{{title}}</title>
+</head>
+<body>
+  {{> header}}
+  <h1>{{title}}</h1>
+  <h2>Informe de ciutats</h2>
+  <ul>
+        {{#each cities}}
+        <li>
+          <strong>{{name}}</strong>  
+          ({{lookup ../countries country}})  
+          — Població: 
+          {{#if population}}
+            {{population}}
+          {{else}}
+          <em>No disponible</em>
+            {{/if}}
 
-<h1>{{title}}</h1>
-<h2>Informe de ciutats</h2>
+            • 
+            {{#if coastal}}
+              🌊 Costanera
+            {{else}}
+              Interior
+            {{/if}}
 
-<ul>
-  {{#each cities}}
-    <li>
-      <strong>{{name}}</strong>  
-      ({{lookup ../countries country}})  
-      — Població: 
-      {{#if population}}
-        {{population}}
-      {{else}}
-        <em>No disponible</em>
-      {{/if}}
+            • 
+            {{#if (lte population ../threshold)}}
+              <span class="badge small">Petita</span>
+            {{else}}
+              <span class="badge big">Gran</span>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+</body>
 
-      • 
-      {{#if coastal}}
-        🌊 Costanera
-      {{else}}
-        Interior
-      {{/if}}
-
-      • 
-      {{#if (lte population ../threshold)}}
-        <span class="badge small">Petita</span>
-      {{else}}
-        <span class="badge big">Gran</span>
-      {{/if}}
-    </li>
-  {{/each}}
-</ul>
+</html>
