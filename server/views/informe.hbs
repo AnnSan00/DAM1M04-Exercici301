@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="/estils.css">
-  <title>{{title}}</title>
-</head>
-<body>
-  {{> header}}
+{{> header}}
   <h1>{{title}}</h1>
   <h2>Informe de ciutats</h2>
   <ul>
@@ -21,14 +13,14 @@
           <em>No disponible</em>
             {{/if}}
 
-            • 
+            
             {{#if coastal}}
               🌊 Costanera
             {{else}}
               Interior
             {{/if}}
-
-            • 
+            
+            <!--para hacer comparaciones, si es grande o pequeña-->
             {{#if (lte population ../threshold)}}
               <span class="badge small">Petita</span>
             {{else}}
